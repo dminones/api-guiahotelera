@@ -18,6 +18,16 @@ const routes = new Router();
 routes.get('/', MetaController.index);
 
 // Authentication
+/**
+ * @api {get} /user/:id Request User information
+ * @apiName GetUser
+ * @apiGroup User
+ *
+ * @apiParam {Number} id Users unique ID.
+ *
+ * @apiSuccess {String} firstname Firstname of the User.
+ * @apiSuccess {String} lastname  Lastname of the User.
+ */
 routes.post('/auth/login', AuthController.login);
 
 // Users

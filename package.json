@@ -4,14 +4,15 @@
   "description": "Boilerplate project for a restful node backend server powered by ES6 and Express",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && babel app -d build",
+    "build": "npm run apidoc && npm run clean && babel app -d build --copy-files",
     "clean": "rm -rf build && mkdir build",
-    "start": "nodemon",
+    "start": "npm run apidoc &&  nodemon",
     "test": "NODE_ENV=test mocha --recursive --reporter spec --compilers js:babel-register tests",
     "lint": "eslint app",
     "test:watch": "nodemon --exec 'npm run test' tests",
     "coverage": "NODE_ENV=test babel-node ./node_modules/.bin/isparta cover _mocha -- --recursive --reporter spec --compilers js:babel-register tests",
-    "validate": "npm run test && npm outdated --depth 0"
+    "validate": "npm run test && npm outdated --depth 0",
+    "apidoc": "apidoc -i app/ -o app/public/apidoc"
   },
   "engines": {
     "node": ">= 6",
@@ -72,5 +73,9 @@
   }, 
   "now" : {
     "alias": "api-guiahotelera"
+  },
+  "apidoc": {
+    "title": "Custom apiDoc browser title",
+    "url" : "https://api.github.com/v1"
   }
 }
