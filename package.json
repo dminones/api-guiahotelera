@@ -4,7 +4,7 @@
   "description": "Boilerplate project for a restful node backend server powered by ES6 and Express",
   "main": "index.js",
   "scripts": {
-    "build": "npm run apidoc && npm run clean && babel app -d build --copy-files",
+    "build": "npm run clean && babel app -d build --copy-files",
     "clean": "rm -rf build && mkdir build",
     "start": "nodemon",
     "test": "NODE_ENV=test mocha --recursive --reporter spec --compilers js:babel-register tests",
