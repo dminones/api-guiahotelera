@@ -6,7 +6,6 @@
   "scripts": {
     "build": "npm run apidoc && npm run clean && babel app -d build --copy-files",
     "clean": "rm -rf build && mkdir build",
-    //"start": "npm run apidoc &&  nodemon",
     "start": "nodemon",
     "test": "NODE_ENV=test mocha --recursive --reporter spec --compilers js:babel-register tests",
     "lint": "eslint app",
