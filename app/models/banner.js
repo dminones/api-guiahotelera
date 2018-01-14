@@ -9,6 +9,7 @@ var schema   = new Schema({
   	link: String,
   	target: String,
   	order: Number,
+  	site: String,
   	_destination : { type: Schema.ObjectId, ref: 'Destination' },
 });
 

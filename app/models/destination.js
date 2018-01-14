@@ -10,6 +10,7 @@ var DestinationSchema   = new Schema({
   	slug: String,
   	order: Number,
   	_parent : { type: Schema.ObjectId, ref: 'Destination' },
+  	site : String
 });
 
 // Export the Mongoose model

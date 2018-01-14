@@ -1,6 +1,7 @@
 import BaseController from './base.controller';
 import Item from '../models/item';
 import AccommodationType from '../models/accommodation_type';
+import Destination from '../models/destination';
 
 let orderByAccomodationType = function(a, b) {
     const aOrder = a._accommodationType ? a._accommodationType.order : Number.MAX_SAFE_INTEGER;
@@ -67,6 +68,14 @@ class ItemController extends BaseController {
             var query = req.query;
             if (query.name)
                 query.name = new RegExp(query.name, "i");
+
+            const site = query.site;
+            if (site && !query._destination) {
+                const destinations = await Destination.find({site})
+                var destinationsIds = destinations.map(i => i._id);
+                query._destination = { $in: destinationsIds }
+                delete query.site
+            }
 
             const items = await Item.find(query)
                 .populate(['_destination', '_accommodationType']);

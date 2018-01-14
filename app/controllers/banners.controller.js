@@ -1,5 +1,6 @@
 import BaseController from './base.controller';
 import Banner from '../models/banner';
+import Destination from '../models/destination';
 
 class BannerController extends BaseController {
 
@@ -8,7 +9,8 @@ class BannerController extends BaseController {
 			var query = { ...req.query }
 			if(query._destination) {
 				query._destination = (req.query._destination === 'null') ? null : query._destination
-			}
+			} 
+
 			const banners = await Banner.find(query).sort('order')
 	      	res.json(banners);
 	    } catch(err) {

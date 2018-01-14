@@ -8,6 +8,7 @@ import ItemsController from './controllers/items.controller';
 import DestinationsController from './controllers/destinations.controller';
 import BannersController from './controllers/banners.controller';
 import BookingController from './controllers/booking.controller';
+import SitesController from './controllers/sites.controller';
 
 import authenticate from './middleware/authenticate';
 import accessControl from './middleware/access-control';
@@ -19,7 +20,7 @@ routes.get('/', MetaController.index);
 
 // Authentication
 /**
- * @api {get} /user/:id Request User information
+ * @api {get} /auth/login Request User information
  * @apiName GetUser
  * @apiGroup User
  *
@@ -65,6 +66,9 @@ routes.get('/item-accommodationtype/', ItemsController.getAccomodationTypes)
 
 // Booking
 routes.post('/book/', BookingController.book)
+
+// Sites
+routes.get('/sites/:slug', SitesController.fetch)
 
 routes.use(errorHandler);
 
