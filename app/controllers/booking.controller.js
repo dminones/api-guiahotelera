@@ -2,12 +2,12 @@ import BaseController from './base.controller';
 import nodemailer from 'nodemailer';
 
 let smtpConfig = {
-    host: 'cr1.toservers.com',
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true, // upgrade later with STARTTLS
     auth: {
-        user: 'consultas@guiahotelerabolivia.com',
-        pass: 'ruben4910'
+        user: 'info@guiahotelerabolivia.com',
+        pass: 'Cactus2290'
     }
 };
 const transporter = nodemailer.createTransport(smtpConfig)
