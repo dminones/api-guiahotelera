@@ -18,6 +18,9 @@ var ItemSchema   = new Schema({
   location: String,
   booking: String,
   publicationType: String,
+  gallery: [
+    { src: String }
+  ],
   _destination : { type: Schema.ObjectId, ref: 'Destination' },
   _accommodationType : { type: Schema.ObjectId, ref: 'AccommodationType' },
   category : String,
