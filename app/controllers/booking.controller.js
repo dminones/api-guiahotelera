@@ -4,9 +4,10 @@ import nodemailer from 'nodemailer';
 let smtpConfig = {
     host: 'smtp.gmail.com',
     port: 465,
-    secure: true, // upgrade later with STARTTLS
+	secure: true, // upgrade later with STARTTLS
+	debug: true,
     auth: {
-        user: 'info@guiahotelerabolivia.com',
+        user: 'info@guiahoteleraargentina.com',
         pass: 'Cactus2290'
     }
 };
@@ -32,6 +33,7 @@ class BookingController extends BaseController {
 	    }
 	    transporter.sendMail(message, (error) => {
 	        if (error) {
+				console.log(error);
 	            res.json({
 	                error: "No pudo enviarse el mensaje. Por favor intente más tarde"
 	            })

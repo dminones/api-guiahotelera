@@ -52,12 +52,12 @@ class DestinationController extends BaseController {
             if(req.query.site) {
                 query.site = req.query.site
             }
-            console.log(query.site)
+            
+            const count = await Destination.count(query);
             const random = Math.floor(Math.random() * count)
-            const [count, destination] = await Promise.all([
-                Destination.count(query),
-                Destination.findOne(query).skip(random)
-            ]);
+            const destination = await Destination.findOne(query).skip(random);
+            console.log(destination.image);
+            
             res.writeHead(302, {
                 'Location': destination.image
             });
