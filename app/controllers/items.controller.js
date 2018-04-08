@@ -62,6 +62,25 @@ let orderByAll = function(a, b) {
 
 class ItemController extends BaseController {
 
+    getDestinationsIds = async (site, destination, nested) => {
+        var params = {};
+        if( site )
+            params.site = site;
+        if(destination)
+            params._id = destination;
+        
+        var destinations = await Destination.find(params);
+        if(nested) {
+            var stack = destinations.slice();
+            while (stack.length>0){
+                stack = await Destination.find({_parent:{ $in: stack.map(i=>i._id) }});
+                destinations = [...destinations, ...stack];
+            }
+        }
+        
+        return destinations.map(i => i._id);
+    }
+
     search = async(req, res, next) => {
 
         try {
@@ -70,11 +89,11 @@ class ItemController extends BaseController {
                 query.name = new RegExp(query.name, "i");
 
             const site = query.site;
-            if (site && !query._destination) {
-                const destinations = await Destination.find({site})
-                var destinationsIds = destinations.map(i => i._id);
-                query._destination = { $in: destinationsIds }
-                delete query.site
+            if (site || query._destination) {
+                const destinationIds = await this.getDestinationsIds(site, query._destination, true);
+                console.log("Destinations .> ", destinationIds);
+                query._destination = { $in: destinationIds };
+                delete query.site;
             }
 
             const items = await Item.find(query)

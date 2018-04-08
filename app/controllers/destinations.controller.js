@@ -7,7 +7,12 @@ class DestinationController extends BaseController {
         var query = { ...req.query }
         const onlyOrdered = (query.onlyOrdered == '1')
         delete query.onlyOrdered
-
+        
+        if(query._parent) {
+            query._parent = (query._parent==='0') ? null : query._parent;
+        }
+        
+        console.log(query)
         var queries = []
 
         var queryOrdered = { ...query }
@@ -56,7 +61,6 @@ class DestinationController extends BaseController {
             const count = await Destination.count(query);
             const random = Math.floor(Math.random() * count)
             const destination = await Destination.findOne(query).skip(random);
-            console.log(destination.image);
             
             res.writeHead(302, {
                 'Location': destination.image
