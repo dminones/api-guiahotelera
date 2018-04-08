@@ -95,7 +95,10 @@ class ItemController extends BaseController {
                 query._destination = { $in: destinationIds };
                 delete query.site;
             }
-
+            if(query.publicationType) {
+                query.publicationType = { $in: query.publicationType.split(',') }
+            }
+                
             const items = await Item.find(query)
                 .populate(['_destination', '_accommodationType']);
             res.json(items.sort(orderByAll))
