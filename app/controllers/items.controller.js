@@ -21,7 +21,8 @@ let orderByPublicationType = function(a, b) {
     let publicationTypes = {
         "Figuracion": 1,
         "Basica": 2,
-        "Premium": 3,
+        "PremiumDestino": 3,
+        "Premium": 4,
     };
 
     const aPublicationOrder = publicationTypes[a.publicationType] ? publicationTypes[a.publicationType] : 0;
