@@ -11,7 +11,9 @@ var DestinationSchema   = new Schema({
   	order: Number,
   	_parent : { type: Schema.ObjectId, ref: 'Destination' },
   	site : String
-});
+}, {
+	timestamps: true,
+});  
 
 // Export the Mongoose model
 module.exports = mongoose.model('Destination', DestinationSchema);

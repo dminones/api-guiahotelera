@@ -6,6 +6,8 @@ var mongoose = require('mongoose')
 var AccommodationTypeSchema   = new Schema({
   	name: String,
   	order: Number
+}, {
+	timestamps: true,
 });
 
 // Export the Mongoose model

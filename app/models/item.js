@@ -24,7 +24,10 @@ var ItemSchema   = new Schema({
   _destination : { type: Schema.ObjectId, ref: 'Destination' },
   _accommodationType : { type: Schema.ObjectId, ref: 'AccommodationType' },
   category : String,
+}, {
+  timestamps: true,
 });
+
 
 
 // Export the Mongoose model

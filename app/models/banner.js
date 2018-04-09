@@ -11,7 +11,9 @@ var schema   = new Schema({
   	order: Number,
   	site: String,
   	_destination : { type: Schema.ObjectId, ref: 'Destination' },
+}, {
+	timestamps: true,
 });
-
+  
 // Export the Mongoose model
 module.exports = mongoose.model('Banner', schema);
