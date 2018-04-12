@@ -74,8 +74,10 @@ class ItemController extends BaseController {
         if(nested) {
             var stack = destinations.slice();
             while (stack.length>0){
-                stack = await Destination.find({_parent:{ $in: stack.map(i=>i._id) }});
+                stack = await Destination.find({_parent:{ $in: stack.map(i=>i._id) }})
+                                        .then(d=>d.filter(i => destinations.includes(i)));
                 destinations = [...destinations, ...stack];
+                console.log(stack);
             }
         }
         
@@ -83,7 +85,7 @@ class ItemController extends BaseController {
     }
 
     search = async(req, res, next) => {
-
+        console.log("SEARCH");
         try {
             var query = req.query;
             if (query.name)
@@ -92,6 +94,7 @@ class ItemController extends BaseController {
             const site = query.site;
             if (site || query._destination) {
                 const destinationIds = await this.getDestinationsIds(site, query._destination, true);
+                console.log(destinationIds);
                 console.log("Destinations .> ", destinationIds);
                 query._destination = { $in: destinationIds };
                 delete query.site;
@@ -99,11 +102,12 @@ class ItemController extends BaseController {
             if(query.publicationType) {
                 query.publicationType = { $in: query.publicationType.split(',') }
             }
-                
+            console.log(query);    
             const items = await Item.find(query)
                 .populate(['_destination', '_accommodationType']);
             res.json(items.sort(orderByAll))
         } catch (err) {
+            console.log(err);
             next(err);
         }
     }
