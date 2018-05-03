@@ -8,7 +8,7 @@ let smtpConfig = {
 	debug: true,
     auth: {
         user: 'info@guiahoteleraargentina.com',
-        pass: 'Cactus2290'
+        pass: 'Ruben4910'
     }
 };
 const transporter = nodemailer.createTransport(smtpConfig)
