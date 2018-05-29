@@ -65,7 +65,7 @@ routes.get('/banner', BannersController.search)
 routes.get('/item-accommodationtype/', ItemsController.getAccomodationTypes)
 
 // Booking
-routes.post('/book/', BookingController.book)
+routes.post('/:site/book/', BookingController.book)
 
 // Sites
 routes.get('/sites/:slug', SitesController.fetch)

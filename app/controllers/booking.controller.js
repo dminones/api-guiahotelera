@@ -1,36 +1,29 @@
 import BaseController from './base.controller';
 import nodemailer from 'nodemailer';
+import config from '../config/constants'
 
-let smtpConfig = {
-    host: 'smtp.gmail.com',
-    port: 465,
-	secure: true, // upgrade later with STARTTLS
-	debug: true,
-    auth: {
-        user: 'info@guiahoteleraargentina.com',
-        pass: 'Ruben4910'
-    }
-};
-const transporter = nodemailer.createTransport(smtpConfig)
+const transporter = nodemailer.createTransport(config.smtpConfig)
 
 class BookingController extends BaseController {
 	
 	book = async(req, res, next) => {
-	    const formData = req.body
+		const site = config.getSite(req.params.site);
+		console.log("SITE -> ", site);
+	    const formData = req.body;
 	    var message = {
-	        from: 'consultas@guiahotelerabolivia.com',
+	        from: 'consultas@guiaohoteleraargentina.com',
 	        to: formData.to,
-	        subject: 'Consulta de Guia Hotelera Bolivia',
+	        subject: 'Consulta de '+site.name,
 	        text: `
-	        Ha recibido la siguiente consulta de Guia Hotelera Bolivia
-	        www.guiahotelerabolivia.com
+			Ha recibido la siguiente consulta de ${site.name}
+			${site.url}
 	        --------------------------------------------------------
 	        Nombre: ${formData.name}
 	        Email:  ${formData.email}
 	        Asunto:  ${formData.subject}
 	        Consulta:  ${formData.message}
 	      `,
-	    }
+	    };
 	    transporter.sendMail(message, (error) => {
 	        if (error) {
 				console.log(error);
@@ -42,7 +35,7 @@ class BookingController extends BaseController {
 	                response: "Mensaje enviado con exito"
 	            })
 	        }
-	    })
+	    });
 	}
 }
 

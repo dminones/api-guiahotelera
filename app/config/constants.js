@@ -1,5 +1,6 @@
 import path from 'path';
 import merge from 'lodash/merge';
+import sites from './sites';
 
 // Default configuations applied to all environments
 const defaultConfig = {
@@ -18,7 +19,9 @@ const defaultConfig = {
   ip: process.env.IP || '0.0.0.0',
   apiPrefix: '', // Could be /api/resource or /api/v2/resource
   userRoles: ['guest', 'user', 'admin'],
-
+  getSite: function(site) {
+    return sites[site];
+  },
   /**
    * MongoDB configuration options
    */
@@ -31,6 +34,15 @@ const defaultConfig = {
     },
   },
 
+  smtpConfig : {
+    service: 'gmail',
+    port: 465,
+    secure: true, // upgrade later with STARTTLS
+      auth: {
+          user: 'info@guiahoteleraargentina.com',
+          pass: 'Ruben4910'
+      }
+  },
   /**
    * Security configuation options regarding sessions, authentication and hashing
    */
