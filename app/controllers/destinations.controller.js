@@ -9,7 +9,7 @@ class DestinationController extends BaseController {
         const results = await DestinationsBlock.findOne({ name: req.params.site }).populate(['destinations']);
         console.log("RESULTS -> ",results);
 
-        res.json(results.destinations);
+        res.json((results && results.destinations) ? results.destinations : []);
     }
 
     search = async(req, res, next) => {
