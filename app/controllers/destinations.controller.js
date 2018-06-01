@@ -5,7 +5,10 @@ import DestinationsBlock from '../models/destinations_block';
 class DestinationController extends BaseController {
 
     home = async(req, res, next) => {
+        console.log("HOME -> ",req.params.site);
         const results = await DestinationsBlock.findOne({ name: req.params.site }).populate(['destinations']);
+        console.log("RESULTS -> ",results);
+
         res.json(results.destinations);
     }
 
