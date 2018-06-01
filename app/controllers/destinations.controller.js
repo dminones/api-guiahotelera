@@ -6,7 +6,7 @@ class DestinationController extends BaseController {
 
     home = async(req, res, next) => {
         console.log("HOME -> ",req.params.site);
-        const results = await DestinationsBlock.findOne({ name: req.params.site }).populate(['destinations']);
+        const results = await DestinationsBlock.findOne({ site: req.params.site }).populate(['destinations']);
         console.log("RESULTS -> ",results);
 
         res.json((results && results.destinations) ? results.destinations : []);
