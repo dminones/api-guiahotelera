@@ -85,7 +85,6 @@ class ItemController extends BaseController {
     }
 
     search = async(req, res, next) => {
-        console.log("SEARCH");
         try {
             var query = req.query;
             if (query.name)

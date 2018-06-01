@@ -1,7 +1,13 @@
 import BaseController from './base.controller';
 import Destination from '../models/destination';
+import DestinationsBlock from '../models/destinations_block';
 
 class DestinationController extends BaseController {
+
+    home = async(req, res, next) => {
+        const results = await DestinationsBlock.findOne({ name: req.params.site }).populate(['destinations']);
+        res.json(results.destinations);
+    }
 
     search = async(req, res, next) => {
         var query = { ...req.query }

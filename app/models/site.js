@@ -6,11 +6,7 @@ const SiteSchema = new Schema({
         type: String,
         required: [true, 'Site Nane is required.'],
     },
-    logo: {
-        type: String,
-        required: [true, 'Site Logo is required.'],
-    },
-    home: [{ type: Schema.ObjectId, ref: 'DestinationsBlock' }]
+    destinatinations: { type: Schema.ObjectId, ref: 'DestinationsBlock' }
 }, {
 	timestamps: true,
 	usePushEach: true

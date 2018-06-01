@@ -51,11 +51,16 @@ routes.get('/admin', accessControl('admin'), MetaController.index);
 // Item
 routes.get('/item', ItemsController.search);
 
+
 // Categories
 routes.get('/category', ItemsController.getCategories)
 
+// Destinations home
+routes.get('/:site/destination/home',  DestinationsController.home);
+
 // Destinations
 routes.get('/destination', DestinationsController.search)
+
 routes.get('/random-destination-image',DestinationsController.getDestinationRandomImage)
 
 // Categories
