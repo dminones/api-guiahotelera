@@ -4,23 +4,31 @@ import DestinationsBlock from '../models/destinations_block';
 
 class DestinationController extends BaseController {
 
-    home = async(req, res, next) => {
-        console.log("HOME -> ",req.params.site);
-        const results = await DestinationsBlock.findOne({ site: req.params.site }).populate(['destinations']);
-        console.log("RESULTS -> ",results);
+    home = async (req, res, next) => {
+        console.log("HOME -> ", req.params.site);
+        const results = await DestinationsBlock.findOne({ site: req.params.site })
+            .sort('destinations.order')
+            .populate({
+                path: 'destinations',
+                populate: {
+                    path: 'destination'
+                },
+                options: { sort: { 'order': 1 } }
+            });
+        console.log("RESULTS -> ", results);
 
-        res.json((results && results.destinations) ? results.destinations : []);
+        res.json((results && results.destinations) ? results.destinations.map(d => d.destination) : []);
     }
 
-    search = async(req, res, next) => {
+    search = async (req, res, next) => {
         var query = { ...req.query }
         const onlyOrdered = (query.onlyOrdered == '1')
         delete query.onlyOrdered
-        
-        if(query._parent) {
-            query._parent = (query._parent==='0') ? null : query._parent;
+
+        if (query._parent) {
+            query._parent = (query._parent === '0') ? null : query._parent;
         }
-        
+
         console.log(query)
         var queries = []
 
@@ -60,17 +68,17 @@ class DestinationController extends BaseController {
         }
     }
 
-    getDestinationRandomImage = async(req, res, next) => {
+    getDestinationRandomImage = async (req, res, next) => {
         try {
             var query = { image: { $ne: null } };
-            if(req.query.site) {
+            if (req.query.site) {
                 query.site = req.query.site
             }
-            
+
             const count = await Destination.count(query);
             const random = Math.floor(Math.random() * count)
             const destination = await Destination.findOne(query).skip(random);
-            
+
             res.writeHead(302, {
                 'Location': destination.image
             });
