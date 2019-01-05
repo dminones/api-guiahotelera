@@ -57,7 +57,7 @@ const defaultConfig = {
 const environmentConfigs = {
   development: {
     mongo: {
-      uri: process.env.MONGO_URI || 'mongodb://localhost/mongoose',
+      uri: process.env.MONGO_URI || 'mongodb://localhost/admin',
     },
     security: {
       saltRounds: 4,
