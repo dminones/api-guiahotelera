@@ -17,18 +17,17 @@ var ItemSchema   = new Schema({
   overview: String,
   location: String,
   booking: String,
+  bookOnline: String,
   publicationType: String,
   gallery: [
-    { src: String }
+    { src: String },
   ],
-  _destination : { type: Schema.ObjectId, ref: 'Destination' },
-  _accommodationType : { type: Schema.ObjectId, ref: 'AccommodationType' },
-  category : String,
+  _destination: { type: Schema.ObjectId, ref: 'Destination' },
+  _accommodationType: { type: Schema.ObjectId, ref: 'AccommodationType' },
+  category: String,
 }, {
   timestamps: true,
 });
-
-
 
 // Export the Mongoose model
 module.exports = mongoose.model('Item', ItemSchema);
