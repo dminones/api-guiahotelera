@@ -24,9 +24,6 @@ app.use(helmet());
 // Cambiado por la configuración de cors custom del middleware
 app.use(cors());
 
-// Setup the Forest Liana middleware in your app.js file
-app.use(forestAdmin(database));
-
 // Request logger
 // https://github.com/expressjs/morgan
 if (!Constants.envs.test) {
@@ -37,6 +34,8 @@ if (!Constants.envs.test) {
 // https://github.com/expressjs/body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+forestAdmin(app, database);
 
 // Lets you use HTTP verbs such as PUT or DELETE
 // https://github.com/expressjs/method-override

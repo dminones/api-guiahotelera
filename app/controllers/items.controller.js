@@ -3,6 +3,16 @@ import Item from '../models/item';
 import AccommodationType from '../models/accommodation_type';
 import Destination from '../models/destination';
 
+function slugify(text)
+{
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
+    .replace(/--+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
+
 let orderByAccomodationType = function(a, b) {
     const aOrder = a._accommodationType ? a._accommodationType.order : Number.MAX_SAFE_INTEGER;
     const bOrder = b._accommodationType ? b._accommodationType.order : Number.MAX_SAFE_INTEGER;
@@ -111,6 +121,37 @@ class ItemController extends BaseController {
         }
     }
 
+    // Middleware to populate post based on url param
+    _populate = async (req, res, next) => {
+        console.log(req.params)
+        const { slug } = req.params;
+
+        try {
+            const model = await Item.findOne({ slug })
+                .populate(['_destination', '_accommodationType']);
+
+            if (!model) {
+                const err = new Error('Not found: ' + slug);
+                err.status = 404;
+                return next(err);
+            }
+
+            req.model = model;
+            next();
+        } catch(err) {
+            err.status = err.name ==='CastError' ? 404 : 500;
+            next(err);
+        }
+    }
+
+    /**
+     * req.post is populated by middleware in routes.js
+     */
+
+    fetch = (req, res) => {
+        res.json(req.model);
+    }
+
     getCategories = async(req, res, next) => {
         try {
             const categories = await Item.find(req.query).distinct('category')
@@ -130,6 +171,16 @@ class ItemController extends BaseController {
     	} catch (err) {
     		next(err);
     	}
+    }
+
+    updateSlugs = async(req, res, next) => {
+        const items = await Item.find({})
+        const results = await Promise.all(items.map( (item,index) => {
+            const slug = slugify(item.name)
+            const result = Item.update({_id:item._id}, {$set: { slug }});
+            return result;
+        }));
+        res.json(results);
     }
 }
 
