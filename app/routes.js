@@ -50,7 +50,7 @@ routes.get('/admin', accessControl('admin'), MetaController.index);
 
 // Item
 routes.get('/item', ItemsController.search);
-routes.get('/item/updateSlugs', ItemsController.updateSlugs);
+// routes.get('/item/updateSlugs', ItemsController.updateSlugs);
 routes.get('/item/:slug', ItemsController._populate, ItemsController.fetch);
 
 
