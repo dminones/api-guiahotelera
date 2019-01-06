@@ -174,13 +174,35 @@ class ItemController extends BaseController {
     }
 
     updateSlugs = async(req, res, next) => {
+        await Item.updateMany({}, {$unset: { slug: '' }});
         const items = await Item.find({})
-        const results = await Promise.all(items.map( (item,index) => {
-            const slug = slugify(item.name)
-            const result = Item.update({_id:item._id}, {$set: { slug }});
-            return result;
-        }));
-        res.json(results);
+        console.log(items)
+        const results = []
+        const duplicatedItems = [];
+        for(let j = 0; j < items.length; j++){
+            const item = items[j];
+            const baseSlug = slugify(item.name)
+            let slug = baseSlug;
+            console.log("slug",slug)
+
+            let duplicated = await Item.findOne({slug})
+            
+            let i = 1;
+            while(duplicated){
+                duplicatedItems.push(duplicated)
+
+                console.log("duplicated",duplicated)
+                slug = `${baseSlug}-${i}`;
+                console.log("newSlug",slug)
+                duplicated = await Item.findOne({slug})
+                i++;
+            }
+            const result = await Item.update({_id:item._id}, {$set: { slug }});
+            results.push(result);
+            
+        }
+
+        res.json( { results, duplicatedItems });
     }
 }
 
