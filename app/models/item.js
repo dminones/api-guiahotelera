@@ -1,11 +1,9 @@
 // Load required packages
-const mongoose = require('mongoose');
-const slug = require('mongoose-slug-generator');
-
-mongoose.plugin(slug);
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
 
-// Define our beer schema
 const ItemSchema = new Schema({
   name: {
     type: String,
@@ -14,8 +12,9 @@ const ItemSchema = new Schema({
   slug: {
     type: String,
     unique: true,
+    slug: 'name',
     validate: {
-      isAsync: true,
+      isAsync: false,
       validator: function(v) {
         return v && v != '';
       },

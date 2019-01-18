@@ -9,10 +9,10 @@ class PostController extends BaseController {
 
    // Middleware to populate post based on url param
   _populate = async (req, res, next) => {
-    const { id } = req.params;
+    const { slug } = req.params;
 
     try {
-      const post = await Post.findById(id);
+      const post = await Post.findOne({ slug });
 
       if (!post) {
         const err = new Error('Post not found.');

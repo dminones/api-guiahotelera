@@ -40,10 +40,10 @@ routes.delete('/users/me', authenticate, UsersController.delete);
 routes.get('/users/:username', UsersController._populate, UsersController.fetch);
 
 // Post
-routes.get('/posts', PostsController.search);
-routes.post('/posts', authenticate, PostsController.create);
-routes.get('/posts/:id', PostsController._populate, PostsController.fetch);
-routes.delete('/posts/:id', authenticate, PostsController.delete);
+routes.get('/post', PostsController.search);
+// routes.post('/post', authenticate, PostsController.create);
+routes.get('/post/:slug', PostsController._populate, PostsController.fetch);
+// routes.delete('/post/:id', authenticate, PostsController.delete);
 
 // Admin
 routes.get('/admin', accessControl('admin'), MetaController.index);
