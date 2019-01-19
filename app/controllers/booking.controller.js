@@ -15,7 +15,7 @@ class BookingController extends BaseController {
       text: `
       ${formData.itemName ? `${formData.itemName}. ` : ''}
       Ha recibido la siguiente consulta de ${site.name}
-      ${formData.url}
+      ${site.url}${formData.url}
       --------------------------------------------------------        
       Nombre: ${formData.name}
       Email: ${formData.email}
