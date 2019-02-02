@@ -1,23 +1,61 @@
 import ForestAdmin from 'forest-express-mongoose';
 import Destination from '../models/destination';
+import Item from '../models/item';
 
 const addSlug = (req, res, next) => {
-  // Your business logic here. 
+  // Your business logic here.
   next();
 };
 
-const updateUrls = async (req, res, next) => {
+const updateDestinationsUrls = async (req, res, next) => {
   const items = await Destination.find({ image: /.*http:\/\/www\.guiahoteleraargentina\.com\.*/ });
-  //const result = await Destination.find({}, {$unset: { slug: '' }});
-  const data = []
-  for(let j = 0; j < items.length; j++){
-    const item = items[j]
-    const image = item.image.replace('http://www.guiahoteleraargentina.com/','https://www.guiahoteleraargentina.com/')
-    const result = await Destination.update({_id:item._id}, {$set: { image }});
-    data.push(result)
+  // const result = await Destination.find({}, {$unset: { slug: '' }});
+  const data = [];
+  for (let j = 0; j < items.length; j++) {
+    const item = items[j];
+    const image = item.image.replace('http://www.guiahoteleraargentina.com/', 'https://www.guiahoteleraargentina.com/');
+    const result = await Destination.update({ _id: item._id }, { $set: { image } });
+    data.push(result);
   }
-  res.send( { data } );
-}
+  res.send({ data });
+};
+
+const updateItemsUrls = async (req, res, next) => {
+  const items = [
+    ...(await Item.find({ thumbnail: /.*http:\/\/www\.guiahoteleraargentina\.com\.*/ })),
+    ...(await Item.find({ logoImage: /.*http:\/\/www\.guiahoteleraargentina\.com\.*/ })),
+    ...(await Item.find({ gallery: { $elemMatch: { src: /.*http:\/\/www\.guiahoteleraargentina\.com\.*/ } } })),
+  ];
+  const data = [];
+  for (let j = 0; j < items.length; j++) {
+    const item = items[j];
+
+    const thumbnail = item.thumbnail
+      ? item.thumbnail.replace('http://www.guiahoteleraargentina.com/', 'https://www.guiahoteleraargentina.com/')
+      : item.thumbnail;
+    const logoImage = item.logoImage
+      ? item.logoImage.replace('http://www.guiahoteleraargentina.com/', 'https://www.guiahoteleraargentina.com/')
+      : item.logoImage;
+
+    let { gallery } = item;
+    if (gallery) {
+      gallery = gallery
+          .map((p) => p.toJSON())
+          .map((galleryItem) => {
+            return {
+              ...galleryItem,
+              src: galleryItem.src.replace(
+                  'http://www.guiahoteleraargentina.com/',
+                  'https://www.guiahoteleraargentina.com/'
+              ),
+            };
+          });
+    }
+    const result = await Item.update({ _id: item._id }, { $set: { logoImage, thumbnail, gallery } });
+    data.push(result);
+  }
+  res.send({ data });
+};
 
 export default function forestAdmin(app, database) {
   // Setup the Forest Liana middleware in your app.js file
@@ -35,7 +73,13 @@ export default function forestAdmin(app, database) {
     actions: [{ name: 'Update urls', global: true }],
   });
 
-  app.post('/forest/actions/update-urls', ForestAdmin.ensureAuthenticated, updateUrls);
+  app.post('/forest/actions/update-urls', ForestAdmin.ensureAuthenticated, updateDestinationsUrls);
+
+  ForestAdmin.collection('Item', {
+    actions: [{ name: 'Update Items urls', global: true }],
+  });
+
+  app.post('/forest/actions/update-items-urls', ForestAdmin.ensureAuthenticated, updateItemsUrls);
 
   app.use(forestAdmin);
 }
