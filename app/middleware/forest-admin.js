@@ -1,10 +1,19 @@
 import ForestAdmin from 'forest-express-mongoose';
 import Destination from '../models/destination';
 import Item from '../models/item';
+import Banner from '../models/banner';
 
-const addSlug = (req, res, next) => {
-  // Your business logic here.
-  next();
+const updateBannerUrls = async (req, res, next) => {
+  const items = await Banner.find({ src: /.*http:\/\/www\.guiahoteleraargentina\.com\.*/ });
+  // const result = await Destination.find({}, {$unset: { slug: '' }});
+  const data = [];
+  for (let j = 0; j < items.length; j++) {
+    const item = items[j];
+    const src = item.src.replace('http://www.guiahoteleraargentina.com/', 'https://www.guiahoteleraargentina.com/');
+    const result = await Banner.update({ _id: item._id }, { $set: { src } });
+    data.push(result);
+  }
+  res.send({ data });
 };
 
 const updateDestinationsUrls = async (req, res, next) => {
@@ -80,6 +89,13 @@ export default function forestAdmin(app, database) {
   });
 
   app.post('/forest/actions/update-items-urls', ForestAdmin.ensureAuthenticated, updateItemsUrls);
+
+  ForestAdmin.collection('Banner', {
+    actions: [{ name: 'Update Banners urls', global: true }],
+  });
+
+  app.post('/forest/actions/update-banners-urls', ForestAdmin.ensureAuthenticated, updateBannerUrls);
+
 
   app.use(forestAdmin);
 }
