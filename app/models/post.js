@@ -3,8 +3,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 const slug = require('mongoose-slug-generator');
 mongoose.plugin(slug);
+const { headProperties } = require('./common/head_properties');
 
 const PostSchema = new Schema({
+  ...headProperties,
   title: {
     type: String,
     required: true,

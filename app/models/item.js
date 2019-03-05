@@ -3,8 +3,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 const slug = require('mongoose-slug-generator');
 mongoose.plugin(slug);
+const { headProperties } = require('./common/head_properties');
 
 const ItemSchema = new Schema({
+  ...headProperties,
   name: {
     type: String,
     required: true,
@@ -34,6 +36,7 @@ const ItemSchema = new Schema({
   location: String,
   booking: String,
   bookOnline: String,
+  whatsapp: String,
   publicationType: String,
   gallery: [
     { src: String },
