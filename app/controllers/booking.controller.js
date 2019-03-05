@@ -10,6 +10,7 @@ class BookingController extends BaseController {
     const formData = req.body;
     const message = {
       from: 'consultas@guiaohoteleraargentina.com',
+      replyTo: formData.email,
       to: formData.to,
       subject: 'Consulta de ' + site.name,
       text: `
