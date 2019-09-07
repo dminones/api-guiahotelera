@@ -27,7 +27,6 @@ rm -rf .git && git init
 # Install dependencies
 npm install
 
-
 # Run it
 npm start
 
