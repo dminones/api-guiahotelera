@@ -22,6 +22,7 @@ First, ensure you have node and mongo installed on your system.
 git clone git@github.com:kylealwyn/node-rest-api-boilerplate.git
 cd node-rest-api-boilerplate
 
+
 # Make it your own
 rm -rf .git && git init
 
@@ -40,6 +41,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"username":"jamesdean", "e
 ## Environment Variables
 Place a `.env` file in the top level of the directory you've cloned. These variables will be automatically assigned to `process.env` when the application boots. It is gitignored by default as it's not good practice to store your environment variables in your remote repository.
 Your `.env` file can look something like this:
+
 
 ```shell
 MONGO_URI=mongodb://somewhere:27017
