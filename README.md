@@ -11,7 +11,7 @@
 - [x] Test coverage via [Isparta](https://github.com/douglasduteil/isparta)
 - [x] Username/Email registration and authentication
 
-
+.
 
 ## Getting Started
 First, ensure you have node and mongo installed on your system.
@@ -21,6 +21,7 @@ First, ensure you have node and mongo installed on your system.
 # clone it
 git clone git@github.com:kylealwyn/node-rest-api-boilerplate.git
 cd node-rest-api-boilerplate
+..
 
 
 # Make it your own
