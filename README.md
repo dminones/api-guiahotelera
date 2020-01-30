@@ -11,6 +11,7 @@
 - [x] Test coverage via [Isparta](https://github.com/douglasduteil/isparta)
 - [x] Username/Email registration and authentication
 
+
 ....
 
 ## Getting Started
