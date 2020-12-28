@@ -39,8 +39,8 @@ const defaultConfig = {
     port: 465,
     secure: true, // upgrade later with STARTTLS
       auth: {
-          user: 'info@guiahoteleraargentina.com',
-          pass: 'Ruben4910'
+          user: process.env.MAIL_ACCOUNT || 'info@guiahoteleraargentina.com',
+          pass: process.env.MAIL_PASSWORD,
       }
   },
   /**
