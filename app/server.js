@@ -23,7 +23,7 @@ app.use(helmet());
 // https://github.com/expressjs/cors
 // Cambiado por la configuración de cors custom del middleware
 app.use(cors({
-  origin: [/\.forestadmin\.com$/],
+  origin: [/\.forestadmin\.com$/, /guiahoteleraargentina\.com/],
   allowedHeaders: ['Authorization', 'X-Requested-With', 'Content-Type', 'forest-context-url'],
   credentials: true
 }));
