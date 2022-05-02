@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from './middleware/cors';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import morgan from 'morgan';
@@ -22,7 +22,11 @@ app.use(helmet());
 // Enable CORS with various options
 // https://github.com/expressjs/cors
 // Cambiado por la configuración de cors custom del middleware
-app.use(cors());
+app.use(cors({
+  origin: [/\.forestadmin\.com$/],
+  allowedHeaders: ['Authorization', 'X-Requested-With', 'Content-Type', 'forest-context-url'],
+  credentials: true
+}));
 
 // Request logger
 // https://github.com/expressjs/morgan

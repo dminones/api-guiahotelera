@@ -217,30 +217,30 @@ export default function forestAdmin(app, database) {
   // app.put('/forest/Item/:itemId', ForestAdmin.ensureAuthenticated, addSlug);
   // app.post('/forest/Item', ForestAdmin.ensureAuthenticated, addSlug);
 
-  const forestAdmin = ForestAdmin.init({
-    modelsDir: __dirname + '/../models', // Your models directory.
+  ForestAdmin.init({
     envSecret: process.env.FOREST_ENV_SECRET,
     authSecret: process.env.FOREST_AUTH_SECRET,
-    mongoose: database, // The mongoose database connection.
+    objectMapping: database,
+    connections: { default: database.connection },
+  }).then((FAMiddleware) => {
+    app.use(FAMiddleware);
   });
 
   ForestAdmin.collection('Destination', {
-    actions: [{ name: 'Update urls', global: true }],
+    actions: [{ name: 'Update urls', type: 'global' }],
   });
 
   app.post('/forest/actions/update-urls', ForestAdmin.ensureAuthenticated, updateDestinationsUrls);
 
   ForestAdmin.collection('Item', {
-    actions: [{ name: 'Update Items urls', global: true }],
+    actions: [{ name: 'Update Items urls', type: 'global' }],
   });
 
   app.post('/forest/actions/update-items-urls', ForestAdmin.ensureAuthenticated, updateItemsUrls);
 
   ForestAdmin.collection('Banner', {
-    actions: [{ name: 'Update Banners urls', global: true }],
+    actions: [{ name: 'Update Banners urls', type: 'global' }],
   });
 
   app.post('/forest/actions/update-banners-urls', ForestAdmin.ensureAuthenticated, updateBannerUrls);
-
-  app.use(forestAdmin);
 }
