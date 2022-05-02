@@ -4,12 +4,14 @@
 > Tested on Node v6 and above
 
 
+
 ## Features
 - [x] ES6 for the latest & greatest javascript awesomeness
 - [x] [MongoDB](https://www.mongodb.com/) w/ [Mongoose](http://mongoosejs.com/) for data layer
 - [x] Testing via [Mocha](https://mochajs.org/) & [Chai](http://chaijs.com/)
 - [x] Test coverage via [Isparta](https://github.com/douglasduteil/isparta)
 - [x] Username/Email registration and authentication
+
 
 
 ..........
