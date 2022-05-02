@@ -15,7 +15,7 @@
     "apidoc": "apidoc -i app/ -o app/public/apidoc"
   },
   "engines": {
-    "node": ">= 6",
+    "node": "15.3.x",
     "npm": ">= 3"
   },
   "repository": {
