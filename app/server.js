@@ -12,6 +12,7 @@ import Constants from './config/constants';
 // Initialize Database
 import database from './database';
 import forestAdmin from './middleware/forest-admin';
+import schemaUI from './middleware/schemaui-admin';
 
 const app = express();
 
@@ -22,11 +23,7 @@ app.use(helmet());
 // Enable CORS with various options
 // https://github.com/expressjs/cors
 // Cambiado por la configuración de cors custom del middleware
-app.use(cors({
-  origin: [/\.forestadmin\.com$/, /guiahoteleraargentina\.com/, /guiahotelerabolivia\.com/],
-  allowedHeaders: ['Authorization', 'X-Requested-With', 'Content-Type', 'forest-context-url'],
-  credentials: true
-}));
+app.use(cors(Constants.cors));
 
 // Request logger
 // https://github.com/expressjs/morgan
@@ -40,6 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 forestAdmin(app, database);
+schemaUI(app, database);
 
 // Lets you use HTTP verbs such as PUT or DELETE
 // https://github.com/expressjs/method-override

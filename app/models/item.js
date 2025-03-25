@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const slug = require('mongoose-slug-generator');
 mongoose.plugin(slug);
 const { headProperties } = require('./common/head_properties');
+const { PublicationTypeModel } = require('./common/publication_type_model')
 
 const ItemSchema = new Schema({
   ...headProperties,
@@ -37,7 +38,7 @@ const ItemSchema = new Schema({
   booking: String,
   bookOnline: String,
   whatsapp: String,
-  publicationType: String,
+  publicationType: PublicationTypeModel,
   gallery: [
     { src: String },
   ],

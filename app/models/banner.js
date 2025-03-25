@@ -1,6 +1,7 @@
 // Load required packages
 var mongoose = require('mongoose')
 , Schema = mongoose.Schema;
+const { SiteModel } = require('./common/site_model')
 
 // Define our beer schema
 var schema   = new Schema({
@@ -9,7 +10,7 @@ var schema   = new Schema({
   	link: String,
   	target: String,
   	order: Number,
-  	site: String,
+  	site: SiteModel,
   	_destination : { type: Schema.ObjectId, ref: 'Destination' },
 }, {
 	timestamps: true,

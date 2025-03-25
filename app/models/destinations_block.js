@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+const { SiteModel } = require('./common/site_model')
 
 const DestionationItemSchema = new Schema(
     { 
@@ -11,7 +12,8 @@ mongoose.model('DestionationItem', DestionationItemSchema);
 
 const DestinationsBlockSchema = new Schema({
   	site: {
-        type: String,
+        type: SiteModel.type,
+        enum: SiteModel.enum,
         required: [true, 'Site es obligatorio'],
         unique:  [true, 'Ya existe un listado de destinos para este sitio'],
     },

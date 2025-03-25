@@ -62,6 +62,10 @@ const environmentConfigs = {
     security: {
       saltRounds: 4,
     },
+    cors: {
+      allowedHeaders: ['Authorization', 'X-Requested-With', 'Content-Type', 'forest-context-url'],
+      credentials: true
+    }
   },
   test: {
     port: 5678,
@@ -77,6 +81,11 @@ const environmentConfigs = {
       seed: false,
       uri: process.env.MONGO_URI,
     },
+    cors: {
+      origin: [/\.forestadmin\.com$/, /guiahoteleraargentina\.com/, /guiahotelerabolivia\.com/],
+      allowedHeaders: ['Authorization', 'X-Requested-With', 'Content-Type', 'forest-context-url'],
+      credentials: true
+    }
   },
 };
 

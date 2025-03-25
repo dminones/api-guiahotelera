@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const { headProperties } = require('./common/head_properties');
-
+const { SiteModel } = require('./common/site_model')
 // Define our beer schema
 const DestinationSchema = new Schema(
     {
@@ -14,7 +14,7 @@ const DestinationSchema = new Schema(
       slug: String,
       order: Number,
       _parent: { type: Schema.ObjectId, ref: 'Destination' },
-      site: String,
+      site: SiteModel,
     },
     {
       timestamps: true,
