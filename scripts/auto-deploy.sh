@@ -11,6 +11,10 @@ REPO_DIR=/home/bitnami/projects/api-guiahotelera
 BRANCH=master
 LOG=/home/bitnami/logs/auto-deploy.log
 
+# Never prompt interactively (a stale host key etc. would hang forever in cron).
+# BatchMode makes ssh fail fast instead, so it gets logged rather than blocking.
+export GIT_SSH_COMMAND="ssh -o BatchMode=yes"
+
 cd "$REPO_DIR" || exit 1
 mkdir -p "$(dirname "$LOG")"
 
