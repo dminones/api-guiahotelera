@@ -8,7 +8,7 @@
 #   1 0 * * * /home/bitnami/projects/api-guiahotelera/scripts/renew-certificates.sh
 set -uo pipefail
 
-LOG=/home/bitnami/projects/scripts/renew-logs.log
+LOG=/home/bitnami/logs/renew-certificates.log
 mkdir -p "$(dirname "$LOG")"
 exec >> "$LOG" 2>&1
 echo "=== $(date) cert renewal ==="
